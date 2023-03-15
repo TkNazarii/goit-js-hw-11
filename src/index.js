@@ -42,22 +42,16 @@ const lightbox = new SimpleLightbox('.gallery a', { captionDelay: 250 });
 // function click search
 async function onSubmit(event) {
 
-	if (myInput.value === '') {
+	if (!myInput.value) {
+		loadMore.hidden = true
 		return
 	}
 
   event.preventDefault();
   wraperGalery.innerHTML = '';
   myPage = 1;
-  const {
-    elements: { searchQuery },
-  } = event.currentTarget;
-  const myTextContent = searchQuery.value.trim();
-  if (!myTextContent) {
-    return console.log('ПУСТИЙ рядок');
-  }
-  const a = await fetchThen(myTextContent);
-  return a
+
+ return await fetchThen(myInput.value);
 }
 
 
