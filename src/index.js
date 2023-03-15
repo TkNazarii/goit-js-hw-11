@@ -3,12 +3,12 @@ import Notiflix from 'notiflix';
 // myFunction FATCH
 import { fetchImage } from "./fetshForm";
 import { createMarkup } from "./createMarcup";
-// Описаний в документації
+// SimpleLightbox
 import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css";
 // start libery AXIOS
 const axios = require('axios').default;
-
+// obj link
 const refs = {
 	form: document.querySelector('.search-form'),
 	myInput: document.querySelector('.search-input'),
@@ -19,18 +19,18 @@ const refs = {
 	infoItem: document.querySelector('.info-item'),
 	loadMore: document.querySelector('.loadMore'),
 }
-// console.log(refs);
+// Destructuring
 const { form, myInput, myButton, wraperGalery, photoCard, wraperInfo, infoItem, loadMore } = refs
 
 let myPage = 1
-//listening form
 
+//listening 
 form.addEventListener("submit", onSubmit);
 loadMore.addEventListener("click", addImage); 
 
-
+// start SimpleLightbox
 const lightbox = new SimpleLightbox('.gallery a', { captionDelay: 250 }); 
-
+// function click search
 function onSubmit(event) {
 	event.preventDefault();
 	wraperGalery.innerHTML = '';
@@ -46,7 +46,7 @@ function onSubmit(event) {
 	
 }
 
-  // обробка запиту
+  // Processing the request
   async function fetchThen(value) {
 	try {
 	  const resp = await fetchImage(value);
@@ -71,7 +71,7 @@ function onSubmit(event) {
 	}
   }
   
-
+// function click addIMG
   async function addImage() {
 	const value2 = myInput.value
 	let limitAdd 
@@ -90,7 +90,7 @@ function onSubmit(event) {
 	}
 	}
   
-
+// function scrole
   function onPageScrolling() {
 	const { height: cardHeight } =
 	wraperGalery.firstElementChild.getBoundingClientRect();
