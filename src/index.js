@@ -41,15 +41,15 @@ loadMore.addEventListener('click', addImage);
 const lightbox = new SimpleLightbox('.gallery a', { captionDelay: 250 });
 // function click search
 async function onSubmit(event) {
+	event.preventDefault();
+	wraperGalery.innerHTML = '';
+	myPage = 1;
 
 	if (!myInput.value) {
 		loadMore.hidden = true
 		return
 	}
 
-  event.preventDefault();
-  wraperGalery.innerHTML = '';
-  myPage = 1;
 
  return await fetchThen(myInput.value);
 }
@@ -59,19 +59,22 @@ async function onSubmit(event) {
 async function fetchThen(value) {
   try {
     const resp = await fetchImage(value);
-    const myArr = resp.data.hits;
+    const myArr = resp.data.hits; //arr
     const objLength = resp.data.totalHits;
+
+	console.log(resp.data);
 
     if (myArr.length === 0) {
       Notiflix.Notify.info(
         'Sorry, there are no images matching your search query. Please try again.'
-      );
-      loadMore.hidden = true
-
+      ) 
+		  loadMore.hidden = true
       return;
     } else if (objLength > 0) {
       Notiflix.Notify.info(`Hooray! We found ${objLength} images.`);
-    }
+    } else if (objLength < 20) {
+		loadMore.hidden = true
+	}
 
     createMarkup(myArr, wraperGalery);
     lightbox.refresh();
