@@ -37,13 +37,15 @@ async function onSubmit(event) {
 	wraperGalery.innerHTML = '';
 	myPage = 1;
 
-	if (!myInput.value) {
+	const myInputValue = myInput.value
+	const myValue = myInputValue.trim()
+
+	if (!myValue) {
 		loadMore.hidden = true
 		return
 	}
 
-
- return await fetchThen(myInput.value);
+ return await fetchThen(myValue);
 }
 
 // loadMore.hidden = false // +
