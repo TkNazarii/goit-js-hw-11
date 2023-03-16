@@ -1,4 +1,3 @@
-// розмітка початкова
 export function createMarkup(arr, wraper) {
   const markap = arr
     .map(
@@ -29,6 +28,6 @@ export function createMarkup(arr, wraper) {
 	</div>`
     )
     .join('');
-  // закидаєм розмітку
+ 
   wraper.insertAdjacentHTML('beforeend', markap);
 }

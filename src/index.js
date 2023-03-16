@@ -12,22 +12,14 @@ const axios = require('axios').default;
 const refs = {
   form: document.querySelector('.search-form'),
   myInput: document.querySelector('.search-input'),
-  myButton: document.querySelector('.search-buttot'),
   wraperGalery: document.querySelector('.gallery'),
-  photoCard: document.querySelector('.photo-card'),
-  wraperInfo: document.querySelector('.info'),
-  infoItem: document.querySelector('.info-item'),
   loadMore: document.querySelector('.loadMore'),
 };
 // Destructuring
 const {
   form,
   myInput,
-  myButton,
   wraperGalery,
-  photoCard,
-  wraperInfo,
-  infoItem,
   loadMore,
 } = refs;
 
@@ -54,31 +46,35 @@ async function onSubmit(event) {
  return await fetchThen(myInput.value);
 }
 
+// loadMore.hidden = false // +
+loadMore.hidden = true // -
 
 // Processing the request
 async function fetchThen(value) {
   try {
     const resp = await fetchImage(value);
     const myArr = resp.data.hits; //arr
-    const objLength = resp.data.totalHits;
-
-	console.log(resp.data);
+    const myNumber = resp.data.total; //number
 
     if (myArr.length === 0) {
       Notiflix.Notify.info(
         'Sorry, there are no images matching your search query. Please try again.'
       ) 
-		  loadMore.hidden = true
       return;
-    } else if (objLength > 0) {
-      Notiflix.Notify.info(`Hooray! We found ${objLength} images.`);
-    } else if (objLength < 20) {
-		loadMore.hidden = true
 	}
-
+	
+    if (myNumber > 0) {
+		Notiflix.Notify.info(`Hooray! We found ${myNumber} images.`);
+	}
+	
     createMarkup(myArr, wraperGalery);
     lightbox.refresh();
-    loadMore.hidden = false
+	loadMore.hidden = false // +
+	
+	if (myArr.length < 20) {
+   loadMore.hidden = true // -
+   }
+
   } catch (error) {
     console.log(error);
   }
