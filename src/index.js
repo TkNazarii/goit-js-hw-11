@@ -62,6 +62,7 @@ async function fetchThen(value) {
       Notiflix.Notify.info(
         'Sorry, there are no images matching your search query. Please try again.'
       ) 
+	  loadMore.hidden = true // -
       return;
 	}
 	
@@ -72,6 +73,7 @@ async function fetchThen(value) {
     createMarkup(myArr, wraperGalery);
     lightbox.refresh();
 	loadMore.hidden = false // +
+	// loadMore.classList.add("style-class")
 	
 	if (myArr.length < 20) {
    loadMore.hidden = true // -
